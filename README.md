@@ -1,2 +1,652 @@
-# formal--invitation
-media pembelajaran interaktif mapel bahasa inggris kelas xi materi formal invitation
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Pembelajaran Interaktif: Formal Invitation</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #f59e0b;
+            --bg: #f3f4f6;
+            --card: #ffffff;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg); color: var(--text); line-height: 1.6; }
+
+        /* Navigation */
+        .navbar {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .navbar h2 { font-size: 1.2rem; }
+        .nav-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .nav-links button {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .nav-links button:hover, .nav-links button.active { background: var(--secondary); border-color: var(--secondary); }
+
+        /* Sections */
+        .section { display: none; padding: 2rem; max-width: 1000px; margin: 0 auto; animation: fadeIn 0.5s; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card {
+            background: var(--card);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+        }
+
+        h1 { color: var(--primary); margin-bottom: 1rem; }
+        h2 { color: var(--primary-dark); margin-bottom: 1rem; border-bottom: 2px solid var(--secondary); padding-bottom: 0.5rem; }
+        h3 { color: var(--text); margin: 1rem 0 0.5rem; }
+        p, li { margin-bottom: 0.5rem; text-align: justify; }
+        ul, ol { padding-left: 1.5rem; }
+
+        /* Beranda */
+        .hero {
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+        .hero h1 { color: white; font-size: 2.5rem; }
+        .hero p { font-size: 1.2rem; opacity: 0.9; }
+
+        /* Teori Interaktif */
+        .accordion { margin-bottom: 1rem; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden; }
+        .accordion-header {
+            background: #f9fafb;
+            padding: 1rem;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .accordion-header:hover { background: #f3f4f6; }
+        .accordion-content { padding: 0 1rem; max-height: 0; overflow: hidden; transition: all 0.3s ease; }
+        .accordion-content.open { padding: 1rem; max-height: 1000px; }
+        .highlight { background: #fef3c7; padding: 2px 5px; border-radius: 4px; font-weight: bold; }
+
+        /* LKPD & Form */
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 0.5rem; }
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        textarea { min-height: 100px; resize: vertical; }
+        
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-success { background: var(--success); color: white; }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-warning { background: var(--secondary); color: white; }
+
+        /* Quiz Games */
+        .game-container { margin-top: 1.5rem; }
+        .drag-drop-area { display: flex; gap: 2rem; flex-wrap: wrap; }
+        .drag-items, .drop-zones { flex: 1; min-width: 250px; }
+        .drag-item {
+            background: #dbeafe;
+            border: 2px dashed var(--primary);
+            padding: 0.8rem;
+            margin-bottom: 0.5rem;
+            border-radius: 6px;
+            cursor: grab;
+            text-align: center;
+            font-weight: bold;
+        }
+        .drag-item:active { cursor: grabbing; }
+        .drop-zone {
+            background: #f3f4f6;
+            border: 2px solid #d1d5db;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 6px;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .drop-zone.over { background: #e0e7ff; border-color: var(--primary); }
+        .drop-zone .remove-btn { background: var(--danger); color: white; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; display: none; }
+
+        .crossword-grid { display: grid; grid-template-columns: repeat(10, 30px); gap: 2px; justify-content: center; margin: 1rem 0; }
+        .cw-cell {
+            width: 30px; height: 30px;
+            border: 1px solid #d1d5db;
+            text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .cw-cell.black { background: #1f2937; border: none; }
+        .cw-cell input { width: 100%; height: 100%; border: none; text-align: center; font-weight: bold; text-transform: uppercase; background: transparent; }
+
+        /* Evaluasi */
+        .question-block { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px dashed #e5e7eb; }
+        .option-label { display: block; padding: 0.5rem; margin: 0.3rem 0; border: 1px solid #e5e7eb; border-radius: 6px; cursor: pointer; }
+        .option-label:hover { background: #f9fafb; }
+        .option-label input { margin-right: 0.5rem; }
+
+        .score-display {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            border-radius: 12px;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Print / PDF Styles */
+        @media print {
+            .navbar, .no-print, .btn { display: none !important; }
+            .section { display: block !important; padding: 0; max-width: 100%; }
+            .section:not(#lkpd) { display: none !important; }
+            .card { box-shadow: none; border: 1px solid #000; page-break-inside: avoid; }
+            body { background: white; color: black; }
+            input, textarea { border: 1px solid #000 !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar no-print">
+        <h2>📚 English Media: Formal Invitation</h2>
+        <div class="nav-links">
+            <button onclick="showSection('beranda', this)" class="active">Beranda</button>
+            <button onclick="showSection('teori', this)">Teori</button>
+            <button onclick="showSection('lkpd', this)">LKPD</button>
+            <button onclick="showSection('quiz', this)">Quiz</button>
+            <button onclick="showSection('evaluasi', this)">Evaluasi</button>
+        </div>
+    </nav>
+
+    <!-- BERANDA -->
+    <section id="beranda" class="section active">
+        <div class="hero">
+            <h1>FORMAL INVITATION</h1>
+            <p>Mastering the Art of Professional and Official Invitations</p>
+        </div>
+        <div class="card" style="text-align: center;">
+            <h2>Media Pembelajaran Interaktif</h2>
+            <p style="font-size: 1.2rem; margin-top: 1rem;">Mata Pelajaran: Bahasa Inggris</p>
+            <p>Kelas / Semester: XI / Ganjil</p>
+            <br>
+            <h3>Disusun Oleh:</h3>
+            <p style="font-size: 1.3rem; font-weight: bold; color: var(--primary);">Mareta Tri Heryanti, S.Pd.</p>
+            <p>SMK Muhammadiyah Jati</p>
+            <br>
+            <p><em>"Selamat datang! Mari belajar menyusun undangan resmi dengan bahasa yang tepat, sopan, dan profesional."</em></p>
+        </div>
+    </section>
+
+    <!-- TEORI -->
+    <section id="teori" class="section">
+        <div class="card">
+            <h1>📖 Konsep Dasar Formal Invitation</h1>
+            <p><strong>Formal Invitation</strong> adalah undangan resmi yang digunakan untuk acara-acara penting, profesional, atau kenegaraan. Undangan ini ditulis dengan tata bahasa yang baku, sopan, dan mengikuti struktur tertentu. Berbeda dengan informal invitation yang santai, formal invitation menuntut tingkat kesopanan (politeness) yang tinggi.</p>
+            
+            <p><strong>Kapan kita menggunakan Formal Invitation?</strong></p>
+            <ul>
+                <li>Pernikahan resmi (Wedding ceremonies)</li>
+                <li>Acara perusahaan (Company gatherings, Galas, Award nights)</li>
+                <li>Konferensi, Seminar, atau Workshop</li>
+                <li>Acara kenegaraan atau diplomatik</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>🧩 Generic Structure (Struktur Teks)</h2>
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">1. The Host (Tuan Rumah) <span>+</span></div>
+                <div class="accordion-content">
+                    <p>Pihak yang mengadakan acara. Dalam undangan pernikahan, seringkali yang menjadi host adalah orang tua mempelai.</p>
+                    <p><em>Contoh: "Mr. and Mrs. Smith request the pleasure of your company..."</em></p>
+                </div>
+            </div>
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">2. The Invitation Phrase (Frasa Undangan) <span>+</span></div>
+                <div class="accordion-content">
+                    <p>Kalimat resmi yang digunakan untuk mengundang. Tidak menggunakan kata "invite" secara langsung, melainkan frasa yang lebih halus.</p>
+                    <p><em>Contoh: "...request the pleasure of your company", "...cordially invite you to attend..."</em></p>
+                </div>
+            </div>
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">3. The Event / Purpose (Tujuan Acara) <span>+</span></div>
+                <div class="accordion-content">
+                    <p>Penjelasan jenis acara yang diselenggarakan.</p>
+                    <p><em>Contoh: "...at the wedding ceremony of their daughter...", "...to the Annual Business Gala..."</em></p>
+                </div>
+            </div>
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">4. The Details (Detail Acara) <span>+</span></div>
+                <div class="accordion-content">
+                    <p>Informasi spesifik: <span class="highlight">Date, Time, Venue (Tempat), dan Dress Code</span>.</p>
+                    <p><em>Contoh: "On Saturday, the twelfth of November at seven o'clock in the evening, Grand Ballroom, Hotel Majestic."</em></p>
+                </div>
+            </div>
+            <div class="accordion">
+                <div class="accordion-header" onclick="toggleAccordion(this)">5. RSVP (Konfirmasi Kehadiran) <span>+</span></div>
+                <div class="accordion-content">
+                    <p>Singkatan dari bahasa Prancis <em>"Répondez s'il vous plaît"</em> yang berarti "Mohon tanggapan/konfirmasi". Berisi batas waktu dan kontak untuk konfirmasi kehadiran.</p>
+                    <p><em>Contoh: "RSVP by November 1st to John at 0812-3456-7890"</em></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🗣️ Language Features (Ciri Kebahasaan)</h2>
+            <ul>
+                <li><strong>Formal Tone:</strong> Tidak menggunakan singkatan (no contractions like <em>don't, can't, I'll</em>). Gunakan <em>do not, cannot, I will</em>.</li>
+                <li><strong>Full Dates and Times:</strong> Tanggal dan waktu ditulis lengkap. <em>Contoh: "the twelfth of October" (bukan Oct 12).</em></li>
+                <li><strong>Third Person Point of View:</strong> Seringkali ditulis menggunakan orang ketiga. <em>Contoh: "Mr. Budi requests..." (bukan "I request...").</em></li>
+                <li><strong>Polite Expressions:</strong> Menggunakan kata-kata seperti <em>cordially, request the pleasure, honor</em>.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- LKPD -->
+    <section id="lkpd" class="section">
+        <div class="card">
+            <h1>📝 Lembar Kerja Peserta Didik (LKPD)</h1>
+            <p><strong>Materi:</strong> Formal Invitation | <strong>Kelas:</strong> XI SMK</p>
+            <hr style="margin: 1rem 0;">
+            
+            <h3>A. Tujuan Pembelajaran</h3>
+            <ol>
+                <li>Peserta didik mampu mengidentifikasi struktur teks dan ciri kebahasaan undangan resmi (formal invitation) dengan tepat.</li>
+                <li>Peserta didik mampu menyusun teks undangan resmi (formal invitation) secara tertulis dengan memperhatikan struktur dan kaidah kebahasaan.</li>
+            </ol>
+
+            <h3>B. Alat dan Bahan</h3>
+            <p>Perangkat Laptop/HP, Browser, dan Media Pembelajaran Interaktif ini.</p>
+
+            <h3>C. Langkah Kerja & Aktivitas</h3>
+            
+            <div style="background: #f9fafb; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                <p><strong>Read the following invitation carefully!</strong></p>
+                <p style="text-align: center; font-family: 'Times New Roman', serif; border: 2px solid #000; padding: 2rem; margin-top: 1rem; background: white;">
+                    The Board of Directors of PT. Maju Mundur<br>
+                    request the pleasure of your company<br>
+                    at the Annual Gala Dinner<br>
+                    to celebrate our 10th Anniversary<br><br>
+                    on Saturday, the twenty-fifth of November<br>
+                    at seven o'clock in the evening<br>
+                    at The Grand Ballroom, Hilton Hotel, Jakarta<br><br>
+                    Dinner and Dancing to follow<br>
+                    Dress Code: Black Tie<br><br>
+                    RSVP by November 15th<br>
+                    Contact: Sarah (021-555-0199)
+                </p>
+            </div>
+
+            <h3>D. Hasil Pengamatan & Pertanyaan</h3>
+            <p><em>Jawablah pertanyaan di bawah ini berdasarkan teks undangan di atas!</em></p>
+
+            <div class="form-group">
+                <label>1. Who is the host of the event? (Siapa tuan rumah acara?)</label>
+                <textarea id="lkpd_q1" placeholder="Ketik jawaban Anda di sini..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>2. What is the purpose of the invitation? (Apa tujuan acara?)</label>
+                <textarea id="lkpd_q2" placeholder="Ketik jawaban Anda di sini..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>3. Mention the date and time of the event written in the text! (Sebutkan tanggal dan waktu acara!)</label>
+                <textarea id="lkpd_q3" placeholder="Ketik jawaban Anda di sini..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>4. What does "Black Tie" mean in the dress code? (Apa maksud dari dress code "Black Tie"?)</label>
+                <textarea id="lkpd_q4" placeholder="Ketik jawaban Anda di sini..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>5. If you want to attend, what must you do before November 15th? (Jika ingin hadir, apa yang harus dilakukan sebelum 15 Nov?)</label>
+                <textarea id="lkpd_q5" placeholder="Ketik jawaban Anda di sini..."></textarea>
+            </div>
+
+            <h3>E. Aktivitas Menulis (Creating)</h3>
+            <div class="form-group">
+                <label>6. TASK: Your school is going to hold an "English Debate Competition". Write a FORMAL INVITATION for the judges and guests. Include all the generic structures (Host, Phrase, Event, Details, RSVP)!</label>
+                <textarea id="lkpd_q6" style="min-height: 200px;" placeholder="Tulis undangan resmi Anda di sini..."></textarea>
+            </div>
+
+            <button class="btn btn-primary no-print" onclick="saveAsPDF()">💾 Save as PDF</button>
+            <p class="no-print" style="font-size: 0.8rem; color: var(--text-light); margin-top: 0.5rem;">*Klik tombol di atas, lalu pilih "Save as PDF" pada jendela print browser Anda.</p>
+        </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section id="quiz" class="section">
+        <div class="card">
+            <h1>🎮 Quiz & Games</h1>
+            <p>Uji pemahaman Anda melalui permainan interaktif berikut!</p>
+
+            <h2>1. Drag & Drop: Match the Terms!</h2>
+            <p><em>Tarik (drag) istilah di sebelah kiri ke kotak definisi yang tepat di sebelah kanan. (Klik istilah lalu klik kotak tujuan jika menggunakan HP).</em></p>
+            <div class="game-container">
+                <div class="drag-drop-area">
+                    <div class="drag-items" id="dragPool">
+                        <div class="drag-item" draggable="true" data-id="1">RSVP</div>
+                        <div class="drag-item" draggable="true" data-id="2">Venue</div>
+                        <div class="drag-item" draggable="true" data-id="3">Host</div>
+                        <div class="drag-item" draggable="true" data-id="4">Dress Code</div>
+                        <div class="drag-item" draggable="true" data-id="5">Cordially</div>
+                    </div>
+                    <div class="drop-zones">
+                        <div class="drop-zone" data-accept="3">The person or organization holding the event <button class="remove-btn" onclick="removeItem(this)">x</button></div>
+                        <div class="drop-zone" data-accept="1">Confirmation of attendance <button class="remove-btn" onclick="removeItem(this)">x</button></div>
+                        <div class="drop-zone" data-accept="4">Rules about what to wear <button class="remove-btn" onclick="removeItem(this)">x</button></div>
+                        <div class="drop-zone" data-accept="2">The location of the event <button class="remove-btn" onclick="removeItem(this)">x</button></div>
+                        <div class="drop-zone" data-accept="5">Warmly / Formally (adverb) <button class="remove-btn" onclick="removeItem(this)">x</button></div>
+                    </div>
+                </div>
+                <button class="btn btn-success" onclick="checkDragDrop()">Check Answers</button>
+                <button class="btn btn-danger" onclick="resetDragDrop()">🔄 Reset Game</button>
+                <p id="dd-feedback" style="margin-top: 1rem; font-weight: bold;"></p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>2. Crossword Puzzle: Formal Invitation</h2>
+            <p><em>Isilah kotak-kotak berikut berdasarkan petunjuk (clues) di bawahnya!</em></p>
+            <div class="game-container">
+                <div class="crossword-grid" id="cwGrid">
+                    <!-- Row 1 -->
+                    <div class="cw-cell black"></div><div class="cw-cell black"></div><div class="cw-cell black"></div><input class="cw-cell" type="text" maxlength="1" data-ans="R"><input class="cw-cell" type="text" maxlength="1" data-ans="S"><input class="cw-cell" type="text" maxlength="1" data-ans="V"><input class="cw-cell" type="text" maxlength="1" data-ans="P"><div class="cw-cell black"></div><div class="cw-cell black"></div><div class="cw-cell black"></div>
+                    <!-- Row 2 -->
+                    <div class="cw-cell black"></div><div class="cw-cell black"></div><div class="cw-cell black"></div><input class="cw-cell" type="text" maxlength="1" data-ans="O"><div class="cw-cell black"></div><div class="cw-cell black"></div><input class="cw-cell" type="text" maxlength="1" data-ans="N"><div class="cw-cell black"></div><div class="cw-cell black"></div><div class="cw-cell black"></div>
+                    <!-- Row 3 -->
+                    <input class="cw-cell" type="text" maxlength="1" data-ans="V"><input class="cw-cell" type="text" maxlength="1" data-ans="E"><input class="cw-cell" type="text" maxlength="1" data-ans="N"><input class="cw-cell" type="text" maxlength="1" data-ans="U"><input class="cw-cell" type="text" maxlength="1" data-ans="E"><div class="cw-cell black"></div><input class="cw-cell" type="text" maxlength="1" data-ans="U"><div class="cw-cell black"></div><div class="cw-cell black"></div><div class="cw-cell black"></div>
+                    <!-- Row 4 -->
+                    <div class="cw-cell black"></div><div class="cw-cell black"></div><div class="cw-cell black"></div><input class="cw-cell" type="text" maxlength="1" data-ans="I"><div class="cw-cell black"></div><div class="cw-cell black"></div><input class="cw-cell" type="text" maxlength="1" data-ans="I"><div class="cw-cell black"></div><div class="cw-cell black"></div><div class="cw-cell black"></div>
+                    <!-- Row 5 -->
+                    <div class="cw-cell black"></div><div class="cw-cell black"></div><div class="cw-cell black"></div><input class="cw-cell" type="text" maxlength="1" data-ans="T"><div class="cw-cell black"></div><div class="cw-cell black"></div><input class="cw-cell" type="text" maxlength="1" data-ans="T"><div class="cw-cell black"></div><div class="cw-cell black"></div><div class="cw-cell black"></div>
+                    <!-- Row 6 -->
+                    <div class="cw-cell black"></div><div class="cw-cell black"></div><div class="cw-cell black"></div><input class="cw-cell" type="text" maxlength="1" data-ans="E"><div class="cw-cell black"></div><div class="cw-cell black"></div><input class="cw-cell" type="text" maxlength="1" data-ans="E"><div class="cw-cell black"></div><div class="cw-cell black"></div><div class="cw-cell black"></div>
+                </div>
+                <p><strong>Clues:</strong></p>
+                <ul>
+                    <li><strong>Across 1:</strong> Abbreviation for confirming attendance (4 letters).</li>
+                    <li><strong>Down 1:</strong> The place where the event happens (5 letters).</li>
+                    <li><strong>Across 2:</strong> The event itself, e.g., Wedding In___tion (9 letters, starts at row 1 col 7).</li>
+                    <li><strong>Down 2:</strong> P___ (Suit/Tie), related to clothing (3 letters, starts at row 3 col 7).</li>
+                </ul>
+                <button class="btn btn-success" onclick="checkCrossword()">Check Answers</button>
+                <button class="btn btn-danger" onclick="resetCrossword()">🔄 Reset Game</button>
+                <p id="cw-feedback" style="margin-top: 1rem; font-weight: bold;"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- EVALUASI -->
+    <section id="evaluasi" class="section">
+        <div class="card" id="eval-container">
+            <!-- Content will be injected by JS -->
+        </div>
+    </section>
+
+    <script>
+        // --- NAVIGATION ---
+        function showSection(id, btn) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+            if(btn) btn.classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // --- TEORI ACCORDION ---
+        function toggleAccordion(header) {
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('span');
+            content.classList.toggle('open');
+            icon.textContent = content.classList.contains('open') ? '-' : '+';
+        }
+
+        // --- LKPD SAVE AS PDF ---
+        function saveAsPDF() {
+            window.print();
+        }
+
+        // --- QUIZ: DRAG AND DROP ---
+        let draggedItem = null;
+        document.querySelectorAll('.drag-item').forEach(item => {
+            item.addEventListener('dragstart', e => { draggedItem = e.target; setTimeout(() => e.target.style.display = 'none', 0); });
+            item.addEventListener('dragend', e => { e.target.style.display = 'block'; draggedItem = null; });
+            // Touch/Click fallback for mobile
+            item.addEventListener('click', e => {
+                if(draggedItem === e.target) { draggedItem = null; e.target.style.border = '2px dashed var(--primary)'; }
+                else {
+                    if(draggedItem) draggedItem.style.border = '2px dashed var(--primary)';
+                    draggedItem = e.target;
+                    e.target.style.border = '2px solid var(--success)';
+                }
+            });
+        });
+
+        document.querySelectorAll('.drop-zone').forEach(zone => {
+            zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
+            zone.addEventListener('dragleave', () => zone.classList.remove('over'));
+            zone.addEventListener('drop', e => {
+                e.preventDefault(); zone.classList.remove('over');
+                if(draggedItem) {
+                    zone.insertBefore(draggedItem, zone.firstChild);
+                    zone.querySelector('.remove-btn').style.display = 'block';
+                    draggedItem.style.border = '2px dashed var(--primary)';
+                }
+            });
+            // Click fallback
+            zone.addEventListener('click', e => {
+                if(e.target.classList.contains('remove-btn')) return;
+                if(draggedItem && !zone.querySelector('.drag-item')) {
+                    zone.insertBefore(draggedItem, zone.firstChild);
+                    zone.querySelector('.remove-btn').style.display = 'block';
+                    draggedItem.style.border = '2px dashed var(--primary)';
+                    draggedItem = null;
+                }
+            });
+        });
+
+        function removeItem(btn) {
+            const zone = btn.parentElement;
+            const item = zone.querySelector('.drag-item');
+            if(item) {
+                document.getElementById('dragPool').appendChild(item);
+                btn.style.display = 'none';
+            }
+        }
+
+        function checkDragDrop() {
+            let correct = 0;
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                const item = zone.querySelector('.drag-item');
+                if(item && item.getAttribute('data-id') === zone.getAttribute('data-accept')) correct++;
+            });
+            const fb = document.getElementById('dd-feedback');
+            if(correct === 5) { fb.textContent = `🎉 Perfect! Score: ${correct}/5`; fb.style.color = 'var(--success)'; }
+            else { fb.textContent = `Try again! Correct: ${correct}/5`; fb.style.color = 'var(--danger)'; }
+        }
+
+        function resetDragDrop() {
+            document.querySelectorAll('.drop-zone .drag-item').forEach(item => {
+                document.getElementById('dragPool').appendChild(item);
+            });
+            document.querySelectorAll('.remove-btn').forEach(btn => btn.style.display = 'none');
+            document.getElementById('dd-feedback').textContent = '';
+        }
+
+        // --- QUIZ: CROSSWORD ---
+        function checkCrossword() {
+            let correct = 0;
+            document.querySelectorAll('#cwGrid input').forEach(input => {
+                if(input.value.toUpperCase() === input.getAttribute('data-ans')) { correct++; input.style.backgroundColor = '#d1fae5'; }
+                else { input.style.backgroundColor = '#fee2e2'; }
+            });
+            const fb = document.getElementById('cw-feedback');
+            fb.textContent = `You got ${correct} letters correct!`;
+            fb.style.color = correct === 12 ? 'var(--success)' : 'var(--danger)';
+        }
+
+        function resetCrossword() {
+            document.querySelectorAll('#cwGrid input').forEach(input => {
+                input.value = '';
+                input.style.backgroundColor = 'transparent';
+            });
+            document.getElementById('cw-feedback').textContent = '';
+        }
+
+        // --- EVALUASI ---
+        const evalQuestions = {
+            mcq: [
+                { q: "Read the sentence: 'Mr. and Mrs. Smith request the pleasure of your company at the wedding of their daughter.' What is the most likely relationship between Mr. and Mrs. Smith and the daughter?", opt: ["They are her employers.", "They are her parents.", "They are her friends.", "They are her colleagues.", "They are her teachers."], ans: 1 },
+                { q: "Why is the phrase 'request the pleasure of your company' used instead of 'We want you to come'?", opt: ["Because it is shorter.", "Because it is an informal invitation.", "Because it shows a higher level of politeness and formality.", "Because it is required by law.", "Because it sounds more modern."], ans: 2 },
+                { q: "An invitation states: 'Dress Code: Black Tie'. What does this imply about the event?", opt: ["Guests should wear casual clothes.", "Guests must wear formal evening wear.", "Guests should wear sportswear.", "Guests must wear traditional costumes.", "Guests can wear anything they want."], ans: 1 },
+                { q: "Which of the following is NOT a characteristic of a formal invitation?", opt: ["Using full dates and times.", "Using third-person point of view.", "Using contractions like 'don't' or 'can't'.", "Including an RSVP section.", "Using polite and formal vocabulary."], ans: 2 },
+                { q: "If an invitation says 'RSVP by October 20th to Budi at 0812-3456-789', what is the guest expected to do?", opt: ["Bring a gift worth a certain amount.", "Arrive exactly at 8:12.", "Confirm their attendance or absence before October 20th.", "Wear a specific dress code.", "Bring a plus-one guest."], ans: 2 },
+                { q: "Analyze this sentence: 'Dinner and dancing to follow.' What does this tell us about the event structure?", opt: ["Dinner and dancing happen at the same time.", "Dinner is cancelled.", "Dancing will happen before dinner.", "Dinner will be served first, followed by a dancing session.", "Guests must bring their own food for dancing."], ans: 3 },
+                { q: "You received a formal invitation for a 'Seminar on Renewable Energy'. However, you have a prior commitment on that date. What is the most appropriate action?", opt: ["Ignore the invitation completely.", "Show up late to the seminar.", "Reply to the RSVP contact to decline politely.", "Send a friend to represent you without informing the host.", "Post on social media that you cannot attend."], ans: 2 },
+                { q: "Which of the following time formats is most appropriate for a formal invitation?", opt: ["Saturday, Oct 12, 7 PM", "Sat, 12/10/26, 19.00", "Saturday, the twelfth of October at seven o'clock in the evening", "12 Oct 2026, night time", "Weekend, 12th Oct, evening"], ans: 2 },
+                { q: "Evaluate the following phrase: 'We cordially invite you to our 17th Anniversary Gala.' Where is this phrase most likely to be found?", opt: ["In a text message to a close friend.", "In a formal printed or digital invitation for a corporate event.", "In a casual WhatsApp group chat.", "In a personal diary.", "In a newspaper advertisement for a product."], ans: 1 },
+                { q: "A formal invitation for a state dinner includes 'The President of the Republic of Indonesia'. What role does this phrase play in the generic structure?", opt: ["The Event", "The Venue", "The Host", "The Dress Code", "The RSVP"], ans: 2 }
+            ],
+            essay: [
+                "Explain the difference between a Formal Invitation and an Informal Invitation in terms of language features and structure! (Provide at least 3 differences).",
+                "Read this informal text: 'Hey guys, come to my bday party at my house this Saturday at 7 PM. Bring your own drinks!' Rewrite it into a FORMAL INVITATION format, assuming it is for a formal 50th Wedding Anniversary celebration hosted by the children for their parents.",
+                "Why is the 'RSVP' section crucial in a formal invitation, especially for large corporate or state events? Explain your reasoning.",
+                "Analyze the use of the third-person point of view (e.g., 'Mr. Budi requests...' instead of 'I request...') in formal invitations. What is the psychological or social effect of using this perspective on the guest?",
+                "Create a short formal invitation for an 'English Speech Competition' at your school. Ensure you include all 5 generic structures (Host, Phrase, Event, Details, RSVP) and use appropriate formal language."
+            ]
+        };
+
+        function renderEvaluation() {
+            const container = document.getElementById('eval-container');
+            
+            // Check if already completed
+            if (localStorage.getItem('eval_completed') === 'true') {
+                container.innerHTML = `
+                    <h1>🔒 Evaluasi Telah Selesai</h1>
+                    <p>Anda telah menyelesaikan evaluasi ini. Sesuai dengan ketentuan, evaluasi tidak dapat diulang.</p>
+                    <div class="score-display" style="margin-top: 2rem;">
+                        <p>Skor Akhir Anda (Pilihan Ganda):</p>
+                        <h1 style="color: white; font-size: 3rem;">${localStorage.getItem('eval_score')} / 50</h1>
+                        <p style="font-size: 1rem; margin-top: 1rem;">*Skor Esai akan dinilai terpisah oleh Guru.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = `
+                <h1>📝 Evaluasi Akhir</h1>
+                <div style="background: #fef3c7; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
+                    <h3>📌 Petunjuk Pengerjaan:</h3>
+                    <ol>
+                        <li>Evaluasi terdiri dari <strong>10 soal Pilihan Ganda (HOTS)</strong> dan <strong>5 soal Esai</strong>.</li>
+                        <li>Kerjakan semua soal pada halaman ini.</li>
+                        <li>Untuk soal Pilihan Ganda, klik salah satu opsi yang paling tepat.</li>
+                        <li>Untuk soal Esai, jawablah dengan jelas dan lengkap pada kolom yang disediakan.</li>
+                        <li><strong>PERHATIAN:</strong> Setelah Anda menekan tombol "Kumpulkan", Anda <strong>TIDAK DAPAT</strong> mengulang atau mengubah jawaban.</li>
+                    </ol>
+                </div>
+                <button class="btn btn-primary" onclick="startEval()" id="startEvalBtn">Mulai Evaluasi</button>
+                <div id="eval-questions" style="display: none;"></div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function startEval() {
+            document.getElementById('startEvalBtn').style.display = 'none';
+            const qContainer = document.getElementById('eval-questions');
+            let html = '<h2>Bagian A: Pilihan Ganda (HOTS) - @ 5 Poin</h2>';
+            
+            evalQuestions.mcq.forEach((q, i) => {
+                html += `<div class="question-block"><p><strong>${i+1}. ${q.q}</strong></p>`;
+                q.opt.forEach((opt, j) => {
+                    html += `<label class="option-label"><input type="radio" name="mcq${i}" value="${j}"> ${opt}</label>`;
+                });
+                html += `</div>`;
+            });
+
+            html += '<h2>Bagian B: Esai - @ 10 Poin</h2>';
+            evalQuestions.essay.forEach((q, i) => {
+                html += `<div class="question-block"><p><strong>${i+11}. ${q}</strong></p><textarea class="essay-ans" placeholder="Ketik jawaban esai Anda di sini..."></textarea></div>`;
+            });
+
+            html += `<button class="btn btn-success" onclick="submitEval()" style="width: 100%; font-size: 1.2rem; padding: 1rem;">🚀 Kumpulkan Jawaban</button>`;
+            qContainer.style.display = 'block';
+            qContainer.innerHTML = html;
+        }
+
+        function submitEval() {
+            if(!confirm("Apakah Anda yakin ingin mengumpulkan jawaban? Anda tidak akan bisa mengulang evaluasi ini.")) return;
+
+            let mcqScore = 0;
+            evalQuestions.mcq.forEach((q, i) => {
+                const selected = document.querySelector(`input[name="mcq${i}"]:checked`);
+                if(selected && parseInt(selected.value) === q.ans) mcqScore += 5;
+            });
+
+            // Disable all inputs
+            document.querySelectorAll('#eval-questions input, #eval-questions textarea').forEach(el => el.disabled = true);
+            document.querySelector('#eval-questions button').style.display = 'none';
+
+            // Save to local storage to prevent retake
+            localStorage.setItem('eval_completed', 'true');
+            localStorage.setItem('eval_score', mcqScore);
+
+            // Show score
+            const scoreDiv = document.createElement('div');
+            scoreDiv.className = 'score-display';
+            scoreDiv.innerHTML = `
+                <p>🎉 Evaluasi Selesai!</p>
+                <h1 style="color: white; font-size: 3rem;">${mcqScore} / 50</h1>
+                <p style="font-size: 1rem; margin-top: 1rem;">Skor Pilihan Ganda Anda. Skor Esai akan dinilai oleh guru.</p>
+            `;
+            document.getElementById('eval-questions').appendChild(scoreDiv);
+            scoreDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initialize Evaluation on load
+        renderEvaluation();
+    </script>
+</body>
+</html>
